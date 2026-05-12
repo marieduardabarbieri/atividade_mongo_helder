@@ -1,5 +1,5 @@
+const { getDatabase } = require("../db/MongoClient");
 const { ObjectId } = require("mongodb");
-const { conectar, getDatabase } = require("../db/MongoClient.js");
 
 class Emprestimos {
   constructor() {
@@ -8,35 +8,40 @@ class Emprestimos {
 
   async cadastrarEmprestimo(emprestimo) {
     try {
-      const emprestimo = await this.colecao.insertOne({
+      const resultado = await this.colecao.insertOne({
         livro_id: new ObjectId(emprestimo.livro_id),
         nome_aluno: emprestimo.nome_aluno,
         data_emprestimo: new Date(emprestimo.data_emprestimo),
         data_devolucao: new Date(emprestimo.data_devolucao),
         devolvido: false,
       });
-      console.log(emprestimo);
-      return emprestimo;
+
+      console.log("Empréstimo cadastrado com sucesso.");
+
+      return resultado;
     } catch (error) {
-      console.log("Erro ao cadastrar um emprestimo", error.message);
+      console.log("Erro ao cadastrar empréstimo:", error.message);
     }
   }
 
   async listarEmprestimos() {
     try {
-      const emprestimo = await this.colecao.find().toArray();
+      const emprestimos = await this.colecao.find().toArray();
 
-      console.log(emprestimo);
-      return emprestimo;
+      console.log(emprestimos);
+
+      return emprestimos;
     } catch (error) {
-      console.log("Erro ao listar emprestimos", error.message);
+      console.log("Erro ao listar empréstimos:", error.message);
     }
   }
 
   async devolverLivro(id) {
     try {
       const resultado = await this.colecao.updateOne(
-        { _id: new ObjectId(id) },
+        {
+          _id: new ObjectId(id),
+        },
         {
           $set: {
             devolvido: true,
@@ -44,10 +49,25 @@ class Emprestimos {
         },
       );
 
-      console.log(resultado);
+      console.log("Livro devolvido com sucesso.");
+
       return resultado;
     } catch (error) {
-      console.log("erro ao devolver livro", error.message);
+      console.log("Erro ao devolver livro:", error.message);
+    }
+  }
+
+  async removerEmprestimo(id) {
+    try {
+      const resultado = await this.colecao.deleteOne({
+        _id: new ObjectId(id),
+      });
+
+      console.log("Empréstimo removido com sucesso.");
+
+      return resultado;
+    } catch (error) {
+      console.log("Erro ao remover empréstimo:", error.message);
     }
   }
 }
