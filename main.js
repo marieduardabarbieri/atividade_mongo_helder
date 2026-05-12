@@ -6,13 +6,6 @@ async function main() {
     await conectar();
 
     const livroRepository = new Livro();
-
-    await livroRepository.cadastrarLivro({
-      titulo: "Dom Casmurro",
-      autor: "Machado de Assis",
-      ano: 1899,
-      disponivel: true,
-    });
   } catch (error) {
     console.log("Erro na aplicação:", error.message);
   }
