@@ -10,20 +10,6 @@ async function main() {
     const emprestimoRepository = new Emprestimo();
 
     // =========================
-    //  EMPRESTIMO
-    // =========================
-
-    /*await emprestimoRepository.cadastrarEmprestimo({
-      livro_id: "69f15300406d4ad379eb507b",
-      nome_aluno: "Aninha",
-      data_emprestimo: "2026-05-12",
-      data_devolucao: "2026-05-20",
-    });*/
-
-    /* COMANDO PARA LISTAR EMPRESTIMO
-      await emprestimoRepository.listarEmprestimos();*/
-
-    // =========================
     //  LIVRO
     // =========================
 
@@ -48,6 +34,26 @@ async function main() {
 
     /* COMANDO PARA REMOVER LIVRO
     await livroRepository.removerLivro("6a033382b96d56d18fc31f34");*/
+
+    // =========================
+    //  EMPRESTIMO
+    // =========================
+
+    /*await emprestimoRepository.cadastrarEmprestimo({
+      livro_id: "69f15300406d4ad379eb507b",
+      nome_aluno: "Aninha",
+      data_emprestimo: "2026-05-12",
+      data_devolucao: "2026-05-20",
+    });*/
+
+    /* COMANDO PARA LISTAR EMPRESTIMO
+      await emprestimoRepository.listarEmprestimos();*/
+
+    /* COMANDO PARA DEVOLVER EMPRESTIMO
+    await emprestimoRepository.devolverLivro("6a0340f9034810080001db9e");*/
+
+    /* COMANDO PARA REMOVER EMPRESTIMO
+    await emprestimoRepository.removerEmprestimo("6a0340f9034810080001db9e");*/
   } catch (error) {
     console.log("Erro na aplicação:", error.message);
   }
