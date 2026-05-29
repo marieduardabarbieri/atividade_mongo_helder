@@ -70,6 +70,56 @@ class Emprestimos {
       console.log("Erro ao remover empréstimo:", error.message);
     }
   }
+
+  async registrarEmprestimo(livroId, usuarioNome) {
+    const livros = getDatabase("biblioteca_digital").collection("livros");
+
+    try {
+      // procura o livro
+
+      const livro = await livros.findOne({
+        _id: new ObjectId(livroId),
+      });
+
+      // verifica disponibilidade
+
+      if (livro.exemplares_disponiveis <= 0) {
+        throw new Error("Não há exemplares disponíveis.");
+      }
+
+      // diminui exemplar disponível
+
+      await livros.updateOne(
+        {
+          _id: new ObjectId(livroId),
+        },
+
+        {
+          $inc: {
+            exemplares_disponiveis: -1,
+          },
+        },
+      );
+
+      // cria empréstimo
+
+      await this.colecao.insertOne({
+        livro_id: new ObjectId(livroId),
+
+        usuario_nome: usuarioNome,
+
+        data_emprestimo: new Date(),
+
+        data_devolucao_prevista: new Date(),
+
+        status: "ativo",
+      });
+
+      console.log("Empréstimo realizado com sucesso.");
+    } catch (error) {
+      console.log("Erro ao registrar empréstimo:", error.message);
+    }
+  }
 }
 
 module.exports = Emprestimos;
