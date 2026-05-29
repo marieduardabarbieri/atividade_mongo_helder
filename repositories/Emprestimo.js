@@ -10,10 +10,10 @@ class Emprestimos {
     try {
       const resultado = await this.colecao.insertOne({
         livro_id: new ObjectId(emprestimo.livro_id),
-        nome_aluno: emprestimo.nome_aluno,
+        usuario_nome: emprestimo.usuario_nome,
         data_emprestimo: new Date(emprestimo.data_emprestimo),
-        data_devolucao: new Date(emprestimo.data_devolucao),
-        devolvido: false,
+        data_devolucao_prevista: new Date(emprestimo.data_devolucao_prevista),
+        status: false,
       });
 
       console.log("Empréstimo cadastrado com sucesso.");
